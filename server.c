@@ -132,6 +132,7 @@ int annogramme(char *str, char *dest)
         return 1;
     }
     srand(time(NULL));
+    //printf("str = %s\n", str);
     int r;
     int fl;
     int k = 0;
@@ -208,7 +209,7 @@ void* threadFunc(void* thread_data)
     if (wait_mode != 0)
     {
         sleep(wait_mode);
-        fprintf(logfile, "[%s] waitinf for %d seconds\n", getTime(), wait_mode);
+        fprintf(logfile, "[%s] waiting for %d seconds\n", getTime(), wait_mode);
 
     }
 
@@ -276,12 +277,18 @@ void* threadFunc(void* thread_data)
     int wordlen;
     int k;
     int wordcount2 = 0;
+    char *al = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+	//printf("<< %s\n", buffer);
     for (int i = 0; i < strlen(buffer); i++)
     {
         k = i;
         wordlen = 0;
         ////printf("!!! %c\n", buffer[i]);
+        if ((strchr(al, buffer[i]) == NULL) || (buffer[i] == '\n'))
+        {
+        	break;
+        }
         while ((buffer[i] != ' ') && (buffer[i] != '\n') && (i < strlen(buffer)))
         {
             //printf("!!! %c\n", buffer[i]);
@@ -289,12 +296,18 @@ void* threadFunc(void* thread_data)
             {
                 break;
             }
-            wordlen++;
+            if (strchr(al, buffer[i]) != NULL)
+        	{
+        	wordlen++;
+        	}
+            
             i++;
         }
         //printf("== %d\n", wordcount2);
         //dict[wordcount2] = strdup(&buffer[k]);
+        //printf(">%s\n", dict[wordcount2]);
         strncpy(dict[wordcount2], &buffer[k], wordlen);
+        //printf(">>%s\n", dict[wordcount2]);
         //printf("-- %s\n", dict[wordcount2]);
         wordcount2++;
     }
@@ -638,6 +651,16 @@ int main(int argc, char* argv[])
     if (port_flag == 0)
     {
         port_str = getenv("L2PORT");
+    }
+    if (ipv4_addr_str == NULL)
+    {
+    	printf("IP address not found\n");
+    	exit(1);
+    }
+    if (port_str == NULL)
+    {
+    	printf("Port not found\n");
+    	exit(1);
     }
 
     if (wait_mode_flag == 0)

@@ -118,6 +118,7 @@ int main(int argc, char* argv[])
             };
         };
     };
+    //printf("after opts\n");
 
     if (ip_flag == 0)
     {
@@ -127,6 +128,18 @@ int main(int argc, char* argv[])
     {
         port_str = getenv("L2PORT");
     }
+    if (ipv4_addr_str == NULL)
+    {
+    	printf("IP address not found\n");
+    	exit(1);
+    }
+    if (port_str == NULL)
+    {
+    	printf("Port not found\n");
+    	exit(1);
+    }
+    
+    //printf("after getenv\n");
 
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0)
@@ -134,15 +147,18 @@ int main(int argc, char* argv[])
         printf("Error wile creating socket\n");
         exit(1);
     }
+    //printf("after sock\n");
 
     int port = atoi(port_str);
+    //printf("after port\n");
     if (port == 0)
     {
         printf("Error: wrong format of port number\n");
         exit(1);
     }
-
+	//printf("after port\n");
     server = gethostbyname(ipv4_addr_str);
+    
     if (server == NULL)
     {
         printf("Error: no such host\n");
