@@ -31,7 +31,7 @@ int getopt_long(int argc,
                 const struct option *longopts,
                 int *longindex);
 
-char *Version = "0.4";
+char *Version = "0.6";
 struct option *long_options;
 int sock;
 struct sockaddr_in serv_addr;
@@ -277,7 +277,7 @@ void* threadFunc(void* thread_data)
     int wordlen;
     int k;
     int wordcount2 = 0;
-    char *al = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    char *al = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 	//printf("<< %s\n", buffer);
     for (int i = 0; i < strlen(buffer); i++)
