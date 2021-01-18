@@ -248,7 +248,7 @@ void* threadFunc(void* thread_data)
     int wordcount = 0;
     for (int i = 0; i < strlen(buffer); i++)
     {
-        if (buffer[i] == ' ')
+        if ((buffer[i] == '\t') || (buffer[i] == ' ') || (buffer[i] == '\v') || (buffer[i] == '\f'))
         {
             wordcount++;
         }
@@ -289,7 +289,7 @@ void* threadFunc(void* thread_data)
         {
         	break;
         }
-        while ((buffer[i] != ' ') && (buffer[i] != '\n') && (i < strlen(buffer)))
+        while ((buffer[i] != ' ') && (buffer[i] != '\t') && (buffer[i] != '\v') && (buffer[i] != '\f') && (buffer[i] != '\n') && (i < strlen(buffer)))
         {
             //printf("!!! %c\n", buffer[i]);
             if (i == strlen(buffer))
@@ -298,15 +298,17 @@ void* threadFunc(void* thread_data)
             }
             if (strchr(al, buffer[i]) != NULL)
         	{
+        	//printf("%c\n", buffer[i]);
         	wordlen++;
         	}
             
             i++;
         }
-        //printf("== %d\n", wordcount2);
+        //printf("== %d\n", wordlen);
         //dict[wordcount2] = strdup(&buffer[k]);
         //printf(">%s\n", dict[wordcount2]);
         strncpy(dict[wordcount2], &buffer[k], wordlen);
+        wordlen = 0;
         //printf(">>%s\n", dict[wordcount2]);
         //printf("-- %s\n", dict[wordcount2]);
         wordcount2++;
@@ -317,7 +319,7 @@ void* threadFunc(void* thread_data)
 
     for (int i = 0; i < wordcount; i++)
     {
-        ////printf("%s\n", dict[i]);
+        //printf("%s\n", dict[i]);
         annogramme(dict[i], string_out);
         free(dict[i]);
     }
