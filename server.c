@@ -307,7 +307,8 @@ void* threadFunc(void* thread_data)
         //printf("== %d\n", wordlen);
         //dict[wordcount2] = strdup(&buffer[k]);
         //printf(">%s\n", dict[wordcount2]);
-        strncpy(dict[wordcount2], &buffer[k], wordlen);
+        //strncpy(dict[wordcount2], &buffer[k], wordlen);
+        snprintf(dict[wordcount2], wordlen + 1, "%s", &buffer[k]);
         wordlen = 0;
         //printf(">>%s\n", dict[wordcount2]);
         //printf("-- %s\n", dict[wordcount2]);
